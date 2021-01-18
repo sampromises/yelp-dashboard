@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+
+{% block html_head %}
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+<!-- Custom JS -->
+<script type="text/javascript">
+    const userId = '{{ user_id }}';
+</script>
+<script type="module" src="{{ url_for('static', filename='js/user.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-centered">
+        <div id="user_metadata" title="{{ user_data.Metadata.LastUpdatedAgo }} ({{ user_data.Metadata.LastUpdated }})">
+            <h3>
+                <a href="https://www.yelp.com/user_details?userid={{ user_data.Metadata.UserId }}">
+                    {{ user_data.Metadata.UserName }}
+                </a>
+            </h3>
+            <h3>{{ user_data.Metadata.City }}</h3>
+            <h3>{{ user_data.Metadata.ReviewCount }} reviews</h3>
+        </div>
+    </div>
+</div>
+
+<div class="col-centered">
+    <div class="progress-bars">
+        <div class="progress">
+            <div id="alive-progress" class="progress-bar bg-success" role="progressbar"
+                style="width:{{ alive_count / (dead_count + alive_count + unknown_count) * 100 }}%"
+                aria-valuenow="{{ alive_count }}" aria-valuemin="0" aria-valuemax="0" data-toggle="tooltip"
+                data-placement="bottom" title="ALIVE means a review is recommended on Yelp.">
+                {{ alive_count }} ALIVE
+            </div>
+            <div id="dead-progress" class="progress-bar bg-danger" role="progressbar"
+                style="width:{{ dead_count / (dead_count + alive_count + unknown_count) * 100 }}%"
+                aria-valuenow="{{ dead_count }}" aria-valuemin="0" aria-valuemax="0" data-toggle="tooltip"
+                data-placement="bottom" title="DEAD means a review is not recommended on Yelp and hidden.">
+                {{ dead_count }} DEAD
+            </div>
+            <div id="unknown-progress" class="progress-bar bg-warning" role="progressbar"
+                style="width:{{ unknown_count / (dead_count + alive_count + unknown_count) * 100 }}%"
+                aria-valuenow="{{ unknown_count }}" aria-valuemin="0" aria-valuemax="0" data-toggle="tooltip"
+                data-placement="bottom" title="UNKNOWN means the data has yet to be fetched.">
+                {{ unknown_count }} UNKNOWN
+            </div>
+        </div>
+    </div>
+</div>
+
+<table id="user_reviews_table" class="table compact text-left table-bordered table-hover" style="width:100%">
+    <thead>
+        <th>Business Name</th>
+        <th>Business Address</th>
+        <th>Review Date</th>
+        <th>Status</th>
+    </thead>
+    <tbody>
+        {% for review in user_data.Reviews %}
+        <tr title="{{ review.LastUpdatedAgo }} ({{ review.LastUpdated }})">
+            <td>{{ review.BizName }}</td>
+            <td><a href="https://www.yelp.com/biz/{{ review.BizId }}">{{ review.BizAddress }}</a></td>
+            <td data-sort="{{ review.ReviewDateTimestamp }}">
+                <a href="https://www.yelp.com/biz/{{ review.BizId }}?hrid={{ review.ReviewId }}">
+                    {{ review.ReviewDate }}
+                </a>
+            </td>
+            <td>{{ review.ReviewStatus }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+html, body {
+    height: 100% !important;
+}
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.progress {
+    font-size: 14px;
+    height: 24px;
+}
+
+.progress-bars {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.truncate-col {
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+.biz-id-col {
+    max-width: 500px;
+}
+
+.review-date-col {
+    max-width: 100px;
+}
+
+.status-col {
+    max-width: 100px;
+}

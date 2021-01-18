@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 col-centered">
+        <div class="jumbotron mt-5 shadow-lg p-3 mb-5 bg-white rounded">
+            <h1 class="display-4">Yelp Dashboard</h1>
+            <hr class="my-4">
+            {% for user_id, user_data in data.items() %}
+            <a href="/user/{{ user_id }}">
+                {{ user_data.Metadata.UserName }} ({{ user_data.Metadata.City }})
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
