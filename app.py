@@ -6,10 +6,16 @@ import dateparser
 import pytz
 import requests
 from flask import Flask, render_template
+from flask_caching import Cache
 
 from pretty_date import pretty_date
 
 app = Flask(__name__)
+
+# Caching
+cache_config = {"CACHE_TYPE": "simple", "CACHE_DEFAULT_TIMEOUT": 300}
+app.config.from_mapping(cache_config)
+cache = Cache(app)
 
 USERS_URL = f"{os.environ['APIG_URL']}/users"
 
@@ -28,6 +34,7 @@ def process_review_status(review_status):
     return "UNKNOWN"
 
 
+@cache.cached(key_prefix="get_data")
 def get_data():
     data = json.loads(requests.get(url=USERS_URL).text)
     for user_id, user_data in data.items():
