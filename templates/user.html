@@ -6,8 +6,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!-- DataTables -->
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css" />
 
 <!-- Custom JS -->
 <script type="text/javascript">
@@ -66,7 +66,7 @@
     </thead>
     <tbody>
         {% for review in user_data.Reviews %}
-        <tr title="{{ review.LastUpdatedAgo }} ({{ review.LastUpdated }})"
+        <tr title=" {{ review.LastUpdatedAgo }} ({{ review.LastUpdated }})"
             class="{{ 'review-alive' if review.ReviewStatus == 'ALIVE' }} {{ 'review-dead' if review.ReviewStatus == 'DEAD' }} {{ 'review-unknown' if review.ReviewStatus == 'UNKNOWN' }}">
             <td>{{ review.BizName }}</td>
             <td><a href="https://www.yelp.com/biz/{{ review.BizId }}">{{ review.BizAddress }}</a></td>
