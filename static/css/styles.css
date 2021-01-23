@@ -39,3 +39,32 @@ a {
 .status-col {
     max-width: 100px;
 }
+
+.review-alive {
+    background-color: #e6ffe6 !important;
+}
+
+.review-dead {
+    background-color: #ffe6e6 !important;
+}
+
+.review-unknown {
+    background-color: #ffffe6 !important;
+}
+
+.progress-bar {
+    color: black;
+}
+
+table.table-bordered{
+    border:1px solid #bfbfbf;
+    margin-top:20px;
+}
+
+table.table-bordered > thead > tr > th{
+    border:1px solid #bfbfbf;
+}
+
+table.table-bordered > tbody > tr > td{
+    border:1px solid #bfbfbf;
+}

@@ -35,19 +35,19 @@
 <div class="col-centered">
     <div class="progress-bars">
         <div class="progress">
-            <div id="alive-progress" class="progress-bar bg-success" role="progressbar"
+            <div id="alive-progress" class="progress-bar review-alive" role="progressbar"
                 style="width:{{ alive_count / (dead_count + alive_count + unknown_count) * 100 }}%"
                 aria-valuenow="{{ alive_count }}" aria-valuemin="0" aria-valuemax="0" data-toggle="tooltip"
                 data-placement="bottom" title="ALIVE means a review is recommended on Yelp.">
                 {{ alive_count }} ALIVE
             </div>
-            <div id="dead-progress" class="progress-bar bg-danger" role="progressbar"
+            <div id="dead-progress" class="progress-bar review-dead" role="progressbar"
                 style="width:{{ dead_count / (dead_count + alive_count + unknown_count) * 100 }}%"
                 aria-valuenow="{{ dead_count }}" aria-valuemin="0" aria-valuemax="0" data-toggle="tooltip"
                 data-placement="bottom" title="DEAD means a review is not recommended on Yelp and hidden.">
                 {{ dead_count }} DEAD
             </div>
-            <div id="unknown-progress" class="progress-bar bg-warning" role="progressbar"
+            <div id="unknown-progress" class="progress-bar review-unknown" role="progressbar"
                 style="width:{{ unknown_count / (dead_count + alive_count + unknown_count) * 100 }}%"
                 aria-valuenow="{{ unknown_count }}" aria-valuemin="0" aria-valuemax="0" data-toggle="tooltip"
                 data-placement="bottom" title="UNKNOWN means the data has yet to be fetched.">
@@ -57,7 +57,7 @@
     </div>
 </div>
 
-<table id="user_reviews_table" class="table compact text-left table-bordered table-hover" style="width:100%">
+<table id="user_reviews_table" class="table compact text-left table-bordered">
     <thead>
         <th>Business Name</th>
         <th>Business Address</th>
@@ -66,7 +66,8 @@
     </thead>
     <tbody>
         {% for review in user_data.Reviews %}
-        <tr title="{{ review.LastUpdatedAgo }} ({{ review.LastUpdated }})">
+        <tr title="{{ review.LastUpdatedAgo }} ({{ review.LastUpdated }})"
+            class="{{ 'review-alive' if review.ReviewStatus == 'ALIVE' }} {{ 'review-dead' if review.ReviewStatus == 'DEAD' }} {{ 'review-unknown' if review.ReviewStatus == 'UNKNOWN' }}">
             <td>{{ review.BizName }}</td>
             <td><a href="https://www.yelp.com/biz/{{ review.BizId }}">{{ review.BizAddress }}</a></td>
             <td data-sort="{{ review.ReviewDateTimestamp }}">
